@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: %i[show edit update]
+    before_action :set_booking, only: %i[show edit update destroy]
 
     def index 
         @bookings = Booking.all 
@@ -35,6 +35,13 @@ class BookingsController < ApplicationController
             else 
                 format.html {render :new, status: :unprocessable_entity}
             end
+        end
+    end
+
+    def destroy 
+        @booking.destroy 
+        respond_to do |format| 
+            format.html {redirect_to bookings_url, notice: "Booking was successfully destroyed"} 
         end
     end
     
