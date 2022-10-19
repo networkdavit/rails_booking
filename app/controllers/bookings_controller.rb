@@ -1,12 +1,13 @@
 class BookingsController < ApplicationController
     before_action :set_booking, only: %i[show edit update destroy]
     before_action :authenticate_user!
+    before_action :owner?, only: %i[show edit update destroy]
 
     def index 
-        @bookings = Booking.all 
+        @bookings = Booking.where(:user_id => current_user.id)
     end
 
-    def show 
+    def show    
 
     end 
 
@@ -54,5 +55,11 @@ class BookingsController < ApplicationController
         
     def set_booking 
         @booking = Booking.find(params[:id])
+    end
+
+    def owner?
+        unless current_user == @booking.user
+          redirect_back fallback_location: bookings_path, notice: 'Bad Request'
+        end
     end
 end
