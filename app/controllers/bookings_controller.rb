@@ -1,5 +1,6 @@
 class BookingsController < ApplicationController
     before_action :set_booking, only: %i[show edit update destroy]
+    before_action :authenticate_user!
 
     def index 
         @bookings = Booking.all 
@@ -48,7 +49,7 @@ class BookingsController < ApplicationController
 
     private 
     def booking_params 
-        params.require(:booking).permit(:room_id, :start, :end, :purpose)
+        params.require(:booking).permit(:room_id, :start, :end, :purpose, :user_id)
     end
         
     def set_booking 

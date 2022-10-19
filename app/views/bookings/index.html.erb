@@ -10,7 +10,7 @@
     <%= booking.purpose %>
 </p>
 <p> Room name:
-    <%= booking.room.name %>
+    <%= link_to booking.room.name, booking.room%>
 </p>
 <% end %>
 <%= link_to "Create New Booking", new_booking_path %>
